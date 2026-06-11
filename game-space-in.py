@@ -1,8 +1,8 @@
 """
 =============================================================================
-SPACE SHOOTER -> SPACE INVADERS STYLE - Mini Game 2D em Python/Pygame
+SPACE INVADERS - Mini Game 2D em Python/Pygame
 =============================================================================
-Demonstra conceitos de Computação Gráfica:
+Conceitos de Computação Gráfica que aparecem por aqui:
   - Transformações geométricas (rotação e translação) via matrizes manuais
   - Animação com loop principal (game loop)
   - Rasterização de primitivas geométricas (polígonos, círculos, linhas)
@@ -15,9 +15,7 @@ import math
 import random
 import sys
 
-# ---------------------------------------------------------------------------
 # CONSTANTES GLOBAIS
-# ---------------------------------------------------------------------------
 LARGURA = 800
 ALTURA = 600
 FPS = 60
@@ -35,9 +33,7 @@ CINZA      = (80, 80, 80)
 AZUL_ESC   = (10, 10, 40)
 
 
-# ===========================================================================
 # FUNÇÕES DE TRANSFORMAÇÃO GEOMÉTRICA
-# ===========================================================================
 
 def rotacionar_ponto(x: float, y: float, theta: float):
     cos_t = math.cos(theta)
@@ -60,9 +56,7 @@ def transformar_vertices(vertices_locais: list, theta: float, tx: float, ty: flo
     return resultado
 
 
-# ===========================================================================
 # FUNÇÕES DE COLISÃO (implementadas manualmente)
-# ===========================================================================
 
 def colisao_circular(ax: float, ay: float, ra: float,
                      bx: float, by: float, rb: float) -> bool:
@@ -183,29 +177,6 @@ class Player:
             if self.timer_inv <= 0:
                 self.invencivel = False
 
-        # # --- Partículas do propulsor ---
-        # movendo = (teclas[pygame.K_a] or teclas[pygame.K_d] or 
-        #            teclas[pygame.K_LEFT] or teclas[pygame.K_RIGHT])
-        # 
-        # # Gera partículas contínuas para baixo já que a nave não muda de ângulo
-        # tx_local, ty_local = 0, 14
-        # px, py = rotacionar_ponto(tx_local, ty_local, self.angulo)
-        # px += self.x
-        # py += self.y
-        # 
-        # # Adiciona partículas com mais frequência se estiver movendo
-        # chance_particula = 1.0 if movendo else 0.3
-        # if random.random() < chance_particula:
-        #     self.particulas.append({
-        #         'x': px + random.uniform(-4, 4),
-        #         'y': py + random.uniform(-4, 4),
-        #         'vida': random.randint(10, 20),
-        #         'cor': random.choice([LARANJA, AMARELO, VERMELHO])
-        #     })
-        #
-        # for p in self.particulas:
-        #     p['vida'] -= 1
-        # self.particulas = [p for p in self.particulas if p['vida'] > 0]
 
     def atirar(self):
         px, py = rotacionar_ponto(0, -20, self.angulo)
@@ -234,7 +205,7 @@ class Player:
 
         pygame.draw.polygon(tela, CINZA, [(int(x+2), int(y+2)) for x, y in verts_mundo])
 
-        cor_nave = CIANO if not self.invencivel else AMARELO
+        cor_nave = CIANO if not self.invencivel else VERMELHO
         pygame.draw.polygon(tela, cor_nave, [(int(x), int(y)) for x, y in verts_mundo])
 
         pygame.draw.polygon(tela, BRANCO,
@@ -358,7 +329,7 @@ class Game:
         self._inicializar()
 
     def _inicializar(self):
-        # A nave agora nasce na base da tela e ali permanecerá fixada no eixo Y
+        # A nave nasce na base da tela e ali permanecerá fixada no eixo Y
         self.player     = Player(LARGURA // 2, ALTURA - 50)
         self.inimigos   = []
         self.projéteis  = []
@@ -467,7 +438,7 @@ class Game:
         self.inimigos = inimigos_vivos
 
     def _renderizar(self):
-        self.tela.fill(AZUL_ESC)
+        self.tela.fill(PRETO)
 
         for e in self.estrelas:
             e.draw(self.tela)
